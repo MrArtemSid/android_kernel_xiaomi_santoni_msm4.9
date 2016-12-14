@@ -1,6 +1,7 @@
 /*
  * net/core/ethtool.c - Ethtool ioctl handler
  * Copyright (c) 2003 Matthew Wilcox <matthew@wil.cx>
+ * Copyright (C) 2016 XiaoMi, Inc.
  *
  * This file is where we call all the ethtool_ops commands to get
  * the information ethtool needs.
