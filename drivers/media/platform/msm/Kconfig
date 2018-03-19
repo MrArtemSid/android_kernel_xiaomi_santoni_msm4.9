@@ -49,6 +49,9 @@ config MSMB_CAMERA_DEBUG
 
 if MSMB_CAMERA
 source "drivers/media/platform/msm/camera_v2/Kconfig"
+if CONFIG_MACH_XIAOMI_LAND
+source "drivers/media/platform/msm/camera_v2-land/Kconfig"
+endif
 endif # MSMB_CAMERA
 
 menuconfig SPECTRA2_CAMERA
