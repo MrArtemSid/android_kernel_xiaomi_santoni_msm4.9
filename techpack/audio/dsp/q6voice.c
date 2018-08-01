@@ -38,6 +38,7 @@
 #define NUM_CHANNELS_STEREO 2
 #define NUM_CHANNELS_THREE 3
 #define NUM_CHANNELS_QUAD 4
+#define CVP_VERSION_1 1
 #define CVP_VERSION_2 2
 #define GAIN_Q14_FORMAT(a) (a << 14)
 
@@ -4355,6 +4356,9 @@ static int voice_get_avcs_version_per_service(uint32_t service_id)
 		       AVCS_SERVICE_ID_ALL);
 		return -EINVAL;
 	}
+
+	if (of_machine_is_compatible("qcom,msm8937"))
+		return CVP_VERSION_1;
 
 	ver_size = sizeof(struct avcs_get_fwk_version) +
 		   sizeof(struct avs_svc_api_info);
