@@ -9,9 +9,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#ifdef CONFIG_MACH_XIAOMI_LAND
-#include "msmb_isp-land.h"
-#else
 #ifndef __MSMB_ISP__
 #define __MSMB_ISP__
 
@@ -32,6 +29,7 @@ struct msm_isp_event_data32 {
 	} u;
 };
 
+#if !defined (CONFIG_MACH_XIAOMI_LAND)
 struct msm_isp32_event_data32 {
 	struct compat_timeval timestamp;
 	struct compat_timeval mono_timestamp;
@@ -43,6 +41,7 @@ struct msm_isp32_event_data32 {
 		struct msm_isp32_error_info error_info;
 	} u;
 };
+#endif
 
 #endif
 #ifdef CONFIG_MSM_AVTIMER
@@ -54,4 +53,3 @@ struct avtimer_fptr_t {
 void msm_isp_set_avtimer_fptr(struct avtimer_fptr_t avtimer_func);
 #endif
 #endif
-#endif /* XIAOMI_LAND */
