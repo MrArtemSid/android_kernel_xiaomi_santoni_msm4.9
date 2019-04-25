@@ -38,11 +38,6 @@
 	status = "okay";
 };
 
-&usb_otg {
-	qcom,hsusb-otg-phy-init-seq =
-		<0x39 0x81 0x37 0x82 0xffffffff>;
-};
-
 &qpnp_fg {
 	qcom,battery-data = <&qrd_batterydata>;
 	qcom,cold-bat-decidegc = <(-100)>;
