@@ -1,29 +1,12 @@
-/* Copyright (c) 2011-2016, 2018, The Linux Foundation. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 and
- * only version 2 as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- */
-
-#ifdef CONFIG_MACH_XIAOMI_LAND
-#include "camera2-land.h"
-#else
 #ifndef __CAMERA2_H__
 #define __CAMERA2_H__
 
-#include <media/msm_cam_sensor.h>
+#include <media/msm_cam_sensor-land.h>
 #include <linux/interrupt.h>
 #include <linux/of_platform.h>
 #include <linux/of_device.h>
 #include <linux/of.h>
 
-#define MAX_SPECIAL_SUPPORT_SIZE 10
 
 enum msm_camera_device_type_t {
 	MSM_CAMERA_I2C_DEVICE,
@@ -50,7 +33,6 @@ struct msm_camera_slave_info {
 	uint16_t sensor_id_reg_addr;
 	uint16_t sensor_id;
 	uint16_t sensor_id_mask;
-	struct msm_camera_i2c_reg_setting *setting;
 };
 
 struct msm_cam_clk_info {
@@ -73,7 +55,7 @@ struct msm_cam_clk_setting {
 };
 
 struct v4l2_subdev_info {
-	uint32_t code;
+	enum v4l2_mbus_pixelcode code;
 	enum v4l2_colorspace colorspace;
 	uint16_t fmt;
 	uint16_t order;
@@ -109,11 +91,10 @@ struct msm_camera_power_ctrl_t {
 	struct camera_vreg_t *cam_vreg;
 	int num_vreg;
 	struct msm_camera_i2c_conf *i2c_conf;
-	struct clk **clk_ptr;
 	struct msm_cam_clk_info *clk_info;
 	struct msm_pinctrl_info pinctrl_info;
 	uint8_t cam_pinctrl_status;
-	size_t clk_info_size;
+	uint16_t clk_info_size;
 };
 
 enum msm_camera_actuator_name {
@@ -152,9 +133,6 @@ struct msm_camera_sensor_board_info {
 	const char *eeprom_name;
 	const char *actuator_name;
 	const char *ois_name;
-	const char *flash_name;
-	const char *special_support_sensors[MAX_SPECIAL_SUPPORT_SIZE];
-	int32_t special_support_size;
 	struct msm_camera_slave_info *slave_info;
 	struct msm_camera_csi_lane_params *csi_lane_params;
 	struct msm_camera_sensor_strobe_flash_data *strobe_flash_data;
@@ -229,4 +207,3 @@ struct msm_eeprom_board_info {
 };
 
 #endif
-#endif /* CONFIG_MACH_XIAOMI_LAND */

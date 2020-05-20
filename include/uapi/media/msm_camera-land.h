@@ -1,28 +1,9 @@
-/* Copyright (c) 2009-2012, 2014-2016, 2018, The Linux Foundation.
- * All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 and
- * only version 2 as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- */
-#ifdef CONFIG_MACH_XIAOMI_LAND
-#include "msm_camera-land.h"
-#else
 #ifndef __UAPI_MSM_CAMERA_H
 #define __UAPI_MSM_CAMERA_H
-
-#define CAM_API_V1
 
 #include <linux/videodev2.h>
 #include <linux/types.h>
 #include <linux/ioctl.h>
-#include <linux/media.h>
 
 #include <linux/msm_ion.h>
 
@@ -39,7 +20,7 @@
 	_IOW(MSM_CAM_IOCTL_MAGIC, 2, struct msm_pmem_info *)
 
 #define MSM_CAM_IOCTL_UNREGISTER_PMEM \
-	_IOW(MSM_CAM_IOCTL_MAGIC, 3, unsigned int)
+	_IOW(MSM_CAM_IOCTL_MAGIC, 3, unsigned)
 
 #define MSM_CAM_IOCTL_CTRL_COMMAND \
 	_IOW(MSM_CAM_IOCTL_MAGIC, 4, struct msm_ctrl_cmd *)
@@ -96,7 +77,7 @@
 	_IOW(MSM_CAM_IOCTL_MAGIC, 21, struct sensor_cfg_data *)
 
 #define MSM_CAM_IOCTL_FLASH_LED_CFG \
-	_IOW(MSM_CAM_IOCTL_MAGIC, 22, unsigned int *)
+	_IOW(MSM_CAM_IOCTL_MAGIC, 22, unsigned *)
 
 #define MSM_CAM_IOCTL_UNBLOCK_POLL_FRAME \
 	_IO(MSM_CAM_IOCTL_MAGIC, 23)
@@ -444,8 +425,7 @@ struct msm_isp_event_ctrl {
 struct msm_stats_event_ctrl {
 	/* 0 - ctrl_cmd from control thread,
 	 * 1 - stats/event kernel,
-	 * 2 - V4L control or read request
-	 */
+	 * 2 - V4L control or read request */
 	int resptype;
 	int timeout_ms;
 	struct msm_ctrl_cmd ctrl_cmd;
@@ -456,8 +436,7 @@ struct msm_stats_event_ctrl {
 /* 2. config command: config command(from config thread); */
 struct msm_camera_cfg_cmd {
 	/* what to config:
-	 * 1 - sensor config, 2 - vfe config
-	 */
+	 * 1 - sensor config, 2 - vfe config */
 	uint16_t cfg_type;
 
 	/* sensor config type */
@@ -484,11 +463,11 @@ struct msm_camera_cfg_cmd {
 #define CMD_STATS_AF_ENABLE		13
 #define CMD_STATS_AEC_ENABLE		14
 #define CMD_STATS_AWB_ENABLE		15
-#define CMD_STATS_ENABLE		16
+#define CMD_STATS_ENABLE  		16
 
 #define CMD_STATS_AXI_CFG		17
 #define CMD_STATS_AEC_AXI_CFG		18
-#define CMD_STATS_AF_AXI_CFG		19
+#define CMD_STATS_AF_AXI_CFG 		19
 #define CMD_STATS_AWB_AXI_CFG		20
 #define CMD_STATS_RS_AXI_CFG		21
 #define CMD_STATS_CS_AXI_CFG		22
@@ -1177,7 +1156,7 @@ enum msm_v4l2_iso_mode {
 
 enum msm_v4l2_wb_mode {
 	MSM_V4L2_WB_OFF,
-	MSM_V4L2_WB_AUTO,
+	MSM_V4L2_WB_AUTO ,
 	MSM_V4L2_WB_CUSTOM,
 	MSM_V4L2_WB_INCANDESCENT,
 	MSM_V4L2_WB_FLUORESCENT,
@@ -1250,7 +1229,7 @@ struct sensor_3d_exp_cfg {
 	uint16_t gb_gain;
 	uint16_t gain_adjust;
 };
-struct sensor_3d_cali_data_t {
+struct sensor_3d_cali_data_t{
 	unsigned char left_p_matrix[3][4][8];
 	unsigned char right_p_matrix[3][4][8];
 	unsigned char square_len[8];
@@ -1395,7 +1374,6 @@ struct msm_camera_csiphy_params {
 	uint16_t lane_mask;
 	uint8_t combo_mode;
 	uint8_t csid_core;
-	uint64_t data_rate;
 };
 
 struct msm_camera_csi2_params {
@@ -1551,9 +1529,7 @@ enum msm_camera_i2c_reg_addr_type {
 	MSM_CAMERA_I2C_BYTE_ADDR = 1,
 	MSM_CAMERA_I2C_WORD_ADDR,
 	MSM_CAMERA_I2C_3B_ADDR,
-	MSM_CAMERA_I2C_DWORD_ADDR,
 };
-#define MSM_CAMERA_I2C_DWORD_ADDR MSM_CAMERA_I2C_DWORD_ADDR
 
 struct msm_camera_i2c_reg_array {
 	uint16_t reg_addr;
@@ -1692,7 +1668,7 @@ enum gpio_operation_type {
 
 struct msm_cam_gpio_operation {
 	enum gpio_operation_type op_type;
-	unsigned int address;
+	unsigned address;
 	int value;
 	const char *tag;
 };
@@ -1747,7 +1723,7 @@ struct reg_settings_t {
 
 struct region_params_t {
 	/* [0] = ForwardDirection Macro boundary
-	 *  [1] = ReverseDirection Inf boundary
+	   [1] = ReverseDirection Inf boundary
 	 */
 	uint16_t step_bound[2];
 	uint16_t code_per_step;
@@ -1758,7 +1734,7 @@ struct msm_actuator_move_params_t {
 	int8_t sign_dir;
 	int16_t dest_step_pos;
 	int32_t num_steps;
-	struct damping_params_t __user *ringing_params;
+	struct damping_params_t *ringing_params;
 };
 
 struct msm_actuator_tuning_params_t {
@@ -1766,7 +1742,7 @@ struct msm_actuator_tuning_params_t {
 	uint16_t pwd_step;
 	uint16_t region_size;
 	uint32_t total_steps;
-	struct region_params_t __user *region_params;
+	struct region_params_t *region_params;
 };
 
 struct msm_actuator_params_t {
@@ -1777,8 +1753,8 @@ struct msm_actuator_params_t {
 	uint32_t i2c_addr;
 	enum msm_actuator_addr_type i2c_addr_type;
 	enum msm_actuator_data_type i2c_data_type;
-	struct msm_actuator_reg_params_t __user *reg_tbl_params;
-	struct reg_settings_t __user *init_settings;
+	struct msm_actuator_reg_params_t *reg_tbl_params;
+	struct reg_settings_t *init_settings;
 };
 
 struct msm_actuator_set_info_t {
@@ -1993,7 +1969,8 @@ struct img_plane_info {
 
 #define QCAMERA_NAME "qcamera"
 #define QCAMERA_SERVER_NAME "qcamera_server"
-#define QCAMERA_VNODE_GROUP_ID MEDIA_ENT_F_IO_V4L
+#define QCAMERA_DEVICE_GROUP_ID 1
+#define QCAMERA_VNODE_GROUP_ID 2
 
 enum msm_cam_subdev_type {
 	CSIPHY_DEV,
@@ -2233,4 +2210,3 @@ struct msm_ver_num_info {
 #define SET_VIDEO_INST_IDX(handle, data)	\
 	(handle |= (0x1 << 7) | (data & 0x7F))
 #endif
-#endif /* CONFIG_MACH_XIAOMI_LAND */
