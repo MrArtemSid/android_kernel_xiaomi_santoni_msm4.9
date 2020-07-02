@@ -342,4 +342,36 @@ config ARCH_ZYNQMP
 	help
 	  This enables support for Xilinx ZynqMP Family
 
+config MACH_XIAOMI
+	bool "Enable Support for Xiaomi Devices"
+	select ARCH_MSM
+	help
+	  This enables support for Xiaomi devices.
+
+config MACH_XIAOMI_MSM8937
+	bool "Enable Support for Xiaomi MSM8937 Devices"
+	select MACH_XIAOMI
+	select ARCH_MSM8937
+	help
+	  This enables support for Xiaomi MSM8937 devices.
+
+config MACH_XIAOMI_MSM8940
+	bool "Enable Support for Xiaomi MSM8940 Devices"
+	select MACH_XIAOMI
+	select ARCH_MSM8940
+	help
+	  This enables support for Xiaomi MSM8940 devices.
+
+config MACH_XIAOMI_SANTONI
+	bool "Enable Support for Xiaomi Redmi 4/4X(santoni)"
+	select MACH_XIAOMI_MSM8940
+	help
+	  This enables support for Xiaomi Redmi 4/4X(santoni).
+
+config MACH_XIAOMI_SANTONI_TREBLE
+	bool "Enable Treble Support for Xiaomi Redmi 4/4X(santoni)"
+	select MACH_XIAOMI_MSM8940
+	help
+	  This enables treble support for Xiaomi Redmi 4/4X(santoni).
+
 endmenu
