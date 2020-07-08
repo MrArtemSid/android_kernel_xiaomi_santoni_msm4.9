@@ -1,0 +1,6 @@
+#include "msm8937-rpm_bus.dtsi"
+#include "msm8937-sdhc.dtsi"
+#include "msm8937-spmi_bus.dtsi"
+#include "msm8937.dtsi"
+#include "msm8937-cpu.dtsi"
+#include "msm8937-soc.dtsi"

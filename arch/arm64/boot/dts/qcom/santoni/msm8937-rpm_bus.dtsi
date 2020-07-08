@@ -1,0 +1,7 @@
+&rpm_bus {
+	rpm-regulator-ldoa6 {
+		pm8937_l6: regulator-l6 {
+			regulator-always-on;
+		};
+	};
+};

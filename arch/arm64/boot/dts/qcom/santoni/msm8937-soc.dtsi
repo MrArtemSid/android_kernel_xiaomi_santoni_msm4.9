@@ -1,0 +1,217 @@
+&soc {
+	int_codec: sound {
+		/delete-property/ qcom,msm-hs-micbias-type;
+		qcom,msm-hs-micbias-type = "internal";
+		ext-spk-amp-gpio = <&tlmm 124 0>;
+		headset-gpio = <&tlmm 129 0>;
+		/delete-property/ qcom,audio-routing;
+		qcom,audio-routing =
+			"RX_BIAS", "MCLK",
+			"SPK_RX_BIAS", "MCLK",
+			"INT_LDO_H", "MCLK",
+			"RX_I2S_CLK", "MCLK",
+			"TX_I2S_CLK", "MCLK",
+			"MIC BIAS External", "Handset Mic",
+			"MIC BIAS Internal2", "Headset Mic",
+			"MIC BIAS External", "Secondary Mic",
+			"AMIC1", "MIC BIAS External",
+			"AMIC2", "MIC BIAS Internal2",
+			"AMIC3", "MIC BIAS External",
+			"ADC1_IN", "ADC1_OUT",
+			"ADC2_IN", "ADC2_OUT",
+			"ADC3_IN", "ADC3_OUT",
+			"PDM_IN_RX1", "PDM_OUT_RX1",
+			"PDM_IN_RX2", "PDM_OUT_RX2",
+			"PDM_IN_RX3", "PDM_OUT_RX3",
+			"WSA_SPK OUT", "VDD_WSA_SWITCH",
+			"SpkrMono WSA_IN", "WSA_SPK OUT";
+		
+		/delete-property/ qcom,msm-mbhc-hphl-swh;
+		qcom,msm-mbhc-hphl-swh = <1>;
+	};
+	tlmm: pinctrl@1000000 {
+		gpio_led_pins {
+			gpio_led_off: gpio_led_off {
+				mux {
+					pins = "gpio45";
+					function = "gpio";
+				};
+				config {
+					pins = "gpio45";
+					drive-strength = <6>;
+					bias-disable;
+					output-high;
+				};
+			};
+		};
+		fpc_spi_active: fpc_spi_active {
+			mux {
+				pins = "gpio20", "gpio21", "gpio22", "gpio23";
+				function = "blsp_spi6";
+			};
+			config {
+				pins = "gpio20", "gpio21", "gpio22", "gpio23";
+				drive-strength = <2>;
+				bias-disable = <0>;
+			};
+		};
+		fpc_reset_reset: fpc_reset_reset {
+			mux {
+				pins = "gpio8";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio8";
+				drive-strength = <2>;
+				bias-disable = <0>;
+				output-low;
+			};
+		};
+		fpc_reset_active: fpc_reset_active {
+			mux {
+				pins = "gpio8";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio8";
+				drive-strength = <2>;
+				bias-disable = <0>;
+				output-high;
+			};
+		};
+		fpc_irq_active: fpc_irq_active {
+			mux {
+				pins = "gpio9";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio9";
+				drive-strength = <2>;
+				bias-disable = <0>;
+				input-enable;
+			};
+		};
+		goodix_spi_active: goodix_spi_active {
+			mux {
+				pins = "gpio20", "gpio21", "gpio22", "gpio23";
+				function = "blsp_spi6";
+			};
+			config {
+				pins = "gpio20", "gpio21", "gpio22", "gpio23";
+				drive-strength = <2>;
+				bias-disable = <0>;
+			};
+		};
+		goodix_reset_reset: goodix_reset_reset {
+			mux {
+				pins = "gpio8";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio8";
+				drive-strength = <2>;
+				bias-disable = <0>;
+				output-low;
+			};
+		};
+		goodix_reset_active: goodix_reset_active {
+			mux {
+				pins = "gpio8";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio8";
+				drive-strength = <2>;
+				bias-disable = <0>;
+				output-high;
+			};
+		};
+		goodix_irq_active: goodix_irq_active {
+			mux {
+				pins = "gpio9";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio9";
+				drive-strength = <2>;
+				bias-disable = <0>;
+				input-enable;
+			};
+		};											
+	};
+	boardinfo {
+		compatible = "wt:boardinfo";
+	};
+	apc_vreg_corner: regulator@b018000 {
+		/delete-property/ qcom,cpr-voltage-floor;
+		qcom,cpr-voltage-floor =   <1150000 1150000 1250000>;
+	};
+	i2c_2: i2c@78b6000 {
+		aw87319@58{
+			compatible = "awinic,aw87319_pa";
+			reg = <0x58>;
+			qcom,ext_pa_spk_aw87319_rst = <&tlmm 124 0>;
+		};
+	};
+	i2c_3: i2c@78b7000 {
+		/delete-property/ qcom,clk-freq-out;
+		qcom,clk-freq-out = <100000>;
+	};
+	/delete-node/ qseecom@85b00000;
+	qcom_seecom: qseecom@84A00000 {
+		compatible = "qcom,qseecom";
+		reg = <0x84A00000 0x1900000>;
+		reg-names = "secapp-region";
+		qcom,hlos-num-ce-hw-instances = <1>;
+		qcom,hlos-ce-hw-instance = <0>;
+		qcom,qsee-ce-hw-instance = <0>;
+		qcom,disk-encrypt-pipe-pair = <2>;
+		qcom,support-fde;
+		qcom,commonlib64-loaded-by-uefi;
+		qcom,msm-bus,name = "qseecom-noc";
+		qcom,msm-bus,num-cases = <4>;
+		qcom,msm-bus,num-paths = <1>;
+		qcom,support-bus-scaling;
+		qcom,msm-bus,vectors-KBps =
+			<55 512 0 0>,
+			<55 512 0 0>,
+			<55 512 120000 1200000>,
+			<55 512 393600 3936000>;
+		clocks = <&clock_gcc clk_crypto_clk_src>,
+			<&clock_gcc clk_gcc_crypto_clk>,
+			<&clock_gcc clk_gcc_crypto_ahb_clk>,
+			<&clock_gcc clk_gcc_crypto_axi_clk>;
+		clock-names = "core_clk_src", "core_clk",
+			"iface_clk", "bus_clk";
+		qcom,ce-opp-freq = <100000000>;
+	};
+	sn_fuse: snfuse@0xa0128 {
+		compatible = "qcom,sn-fuse";
+		reg = <0xa0128 0x4>;
+		reg-names = "sn-base";
+	};
+
+	sec_boot_fuse: secbootfuse@0xa41d0 {
+		compatible = "qcom,sec-boot-fuse";
+		reg = <0xa41d0 0x4>;
+		reg-names = "sec-boot-base";
+	};
+	qcom,msm_fastrpc {
+		qcom,msm_fastrpc_compute_cb {
+			qcom,virtual-addr-pool = <0x80000000 0x7fffffff>;
+		};
+	};
+	wsa881x_analog_vi_pctrl {
+		status = "disabled";
+	};
+	wsa881x_analog_clk_pctrl {
+		status = "disabled";
+	};
+	wsa881x_analog_reset_pctrl {
+		status = "disabled";
+	};
+};
+
+&apc_vreg_corner {
+	/delete-property/ qcom,cpr-enable;
+};
