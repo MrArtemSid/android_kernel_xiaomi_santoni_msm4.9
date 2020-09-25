@@ -47,13 +47,15 @@ enum btsco_rates {
 #define EXT_CLASS_D_DIS_DELAY 3000
 #define EXT_CLASS_D_DELAY_DELTA 2000
 
-/* dummy definition of deprecated FE DAI's*/
+#if 0
+/* dummy definition of below deprecated FE DAI's*/
 enum {
 	MSM_FRONTEND_DAI_CS_VOICE = 39,
 	MSM_FRONTEND_DAI_VOICE2,
 	MSM_FRONTEND_DAI_VOLTE,
 	MSM_FRONTEND_DAI_VOWLAN,
 };
+#endif
 
 static int msm8952_auxpcm_rate = 8000;
 static int msm_btsco_rate = BTSCO_RATE_8KHZ;
@@ -1874,6 +1876,26 @@ static struct snd_soc_dai_link msm8952_dai[] = {
 		.ignore_pmdown_time = 1,
 		.id = MSM_FRONTEND_DAI_MULTIMEDIA2,
 	},
+#if 1
+	{/* hw:x,2 */
+		.name = "Circuit-Switch Voice",
+		.stream_name = "CS-Voice",
+		.cpu_dai_name   = "CS-VOICE",
+		.platform_name  = "msm-pcm-voice",
+		.dynamic = 1,
+		.dpcm_playback = 1,
+		.dpcm_capture = 1,
+		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
+			SND_SOC_DPCM_TRIGGER_POST},
+		.no_host_mode = SND_SOC_DAI_LINK_NO_HOST,
+		.ignore_suspend = 1,
+		/* this dainlink has playback support */
+		.ignore_pmdown_time = 1,
+		.id = MSM_FRONTEND_DAI_CS_VOICE,
+		.codec_dai_name = "snd-soc-dummy-dai",
+		.codec_name = "snd-soc-dummy",
+	},
+#else
 	{/* hw:x,2 */
 		.name = "Circuit-Switch Voice",
 		.stream_name = "CS-Voice",
@@ -1892,6 +1914,7 @@ static struct snd_soc_dai_link msm8952_dai[] = {
 		.codec_dai_name = "snd-soc-dummy-dai",
 		.codec_name = "snd-soc-dummy",
 	},
+#endif
 	{/* hw:x,3 */
 		.name = "MSM VoIP",
 		.stream_name = "VoIP",
@@ -2049,6 +2072,26 @@ static struct snd_soc_dai_link msm8952_dai[] = {
 		.ignore_pmdown_time = 1,
 		.id = MSM_FRONTEND_DAI_MULTIMEDIA5,
 	},
+#if 1
+	{/* hw:x,13 */
+		.name = "Voice2",
+		.stream_name = "Voice2",
+		.cpu_dai_name   = "Voice2",
+		.platform_name  = "msm-pcm-voice",
+		.dynamic = 1,
+		.dpcm_playback = 1,
+		.dpcm_capture = 1,
+		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
+			SND_SOC_DPCM_TRIGGER_POST},
+		.no_host_mode = SND_SOC_DAI_LINK_NO_HOST,
+		.ignore_suspend = 1,
+		/* this dainlink has playback support */
+		.ignore_pmdown_time = 1,
+		.codec_dai_name = "snd-soc-dummy-dai",
+		.codec_name = "snd-soc-dummy",
+		.id = MSM_FRONTEND_DAI_VOICE2,
+	},
+#else
 	{/* hw:x,13 */
 		.name = "Voice2",
 		.stream_name = "Voice2",
@@ -2067,6 +2110,7 @@ static struct snd_soc_dai_link msm8952_dai[] = {
 		.codec_name = "snd-soc-dummy",
 		.id = MSM_FRONTEND_DAI_VOICE2,
 	},
+#endif
 	{/* hw:x,14 */
 		.name = "MSM8x16 Media9",
 		.stream_name = "MultiMedia9",
@@ -2084,6 +2128,43 @@ static struct snd_soc_dai_link msm8952_dai[] = {
 		.ignore_pmdown_time = 1,
 		.id = MSM_FRONTEND_DAI_MULTIMEDIA9,
 	},
+#if 1
+	{ /* hw:x,15 */
+		.name = "VoLTE",
+		.stream_name = "VoLTE",
+		.cpu_dai_name   = "VoLTE",
+		.platform_name  = "msm-pcm-voice",
+		.dynamic = 1,
+		.dpcm_playback = 1,
+		.dpcm_capture = 1,
+		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
+			SND_SOC_DPCM_TRIGGER_POST},
+		.no_host_mode = SND_SOC_DAI_LINK_NO_HOST,
+		.ignore_suspend = 1,
+		/* this dainlink has playback support */
+		.ignore_pmdown_time = 1,
+		.codec_dai_name = "snd-soc-dummy-dai",
+		.codec_name = "snd-soc-dummy",
+		.id = MSM_FRONTEND_DAI_VOLTE,
+	},
+	{ /* hw:x,16 */
+		.name = "VoWLAN",
+		.stream_name = "VoWLAN",
+		.cpu_dai_name   = "VoWLAN",
+		.platform_name  = "msm-pcm-voice",
+		.dynamic = 1,
+		.dpcm_playback = 1,
+		.dpcm_capture = 1,
+		.trigger = {SND_SOC_DPCM_TRIGGER_POST,
+			SND_SOC_DPCM_TRIGGER_POST},
+		.no_host_mode = SND_SOC_DAI_LINK_NO_HOST,
+		.ignore_suspend = 1,
+		.ignore_pmdown_time = 1,
+		.codec_dai_name = "snd-soc-dummy-dai",
+		.codec_name = "snd-soc-dummy",
+		.id = MSM_FRONTEND_DAI_VOWLAN,
+	},
+#else
 	{ /* hw:x,15 */
 		.name = "VoLTE",
 		.stream_name = "VoLTE",
@@ -2119,6 +2200,7 @@ static struct snd_soc_dai_link msm8952_dai[] = {
 		.codec_name = "snd-soc-dummy",
 		.id = MSM_FRONTEND_DAI_VOWLAN,
 	},
+#endif
 	{/* hw:x,17 */
 		.name = "INT_HFP_BT Hostless",
 		.stream_name = "INT_HFP_BT Hostless",
