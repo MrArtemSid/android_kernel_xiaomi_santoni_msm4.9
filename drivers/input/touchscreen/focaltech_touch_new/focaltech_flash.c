@@ -1035,13 +1035,13 @@ static int fts_read_file(char *file_name, u8 **file_buf,
 		FTS_ERROR("filename/filebuf is NULL");
 		return -EINVAL;
 	}
-
+	/*
 	ret = firmware_request_nowarn(&fw, file_name, upg->ts_data->dev);
 	if (ret) {
 		FTS_INFO("firmware(%s) request fail,ret=%d", file_name, ret);
 		return ret;
 	}
-
+	*/
 	FTS_INFO("firmware(%s) request successfully", file_name);
 	*file_buf = vmalloc(fw->size);
 	if (NULL == *file_buf) {
