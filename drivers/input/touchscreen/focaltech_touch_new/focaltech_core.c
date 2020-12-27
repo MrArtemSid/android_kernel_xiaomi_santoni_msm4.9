@@ -283,7 +283,10 @@ static int fts_read_bootid(struct fts_ts_data *ts_data, u8 *id)
 * Return: return 0 if get correct ic information, otherwise return error code
 *****************************************************************************/
 static int fts_get_ic_information(struct fts_ts_data *ts_data)
-{
+{	
+#if 1
+	return 0;
+#else
 	int ret = 0;
 	int cnt = 0;
 	u8 chip_id[2] = { 0 };
@@ -335,6 +338,7 @@ static int fts_get_ic_information(struct fts_ts_data *ts_data)
 		ts_data->ic_info.ids.chip_idh, ts_data->ic_info.ids.chip_idl);
 
 	return 0;
+#endif
 }
 
 /*****************************************************************************
