@@ -672,6 +672,7 @@ dtb-$(CONFIG_ARCH_SDM429) += sdm429-mtp.dtb \
 
 endif
 
+dtb-$(CONFIG_ARCH_MSM8937) := msm8937-pmi8950-mtp-prada.dtb
 dtb-$(CONFIG_ARCH_SDM845_VM) += sdm845-vm.dtb
 
 always		:= $(dtb-y)
