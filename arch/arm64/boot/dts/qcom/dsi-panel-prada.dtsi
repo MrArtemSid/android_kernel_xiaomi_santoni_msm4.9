@@ -2,7 +2,7 @@
 	qcom,mdss_dsi_hx8394f_boe_720p_video {
 		xiaomi,panel-id = <0x0>;
 		qcom,mdss-dsi-panel-name = "BOE_hx8394F_720p_video_mode_dsi_panel";
-		qcom,mdss-dsi-panel-controller = <0x169>;
+		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
 		qcom,mdss-dsi-panel-type = "dsi_video_mode";
 		qcom,mdss-dsi-panel-destination = "display_1";
 		qcom,mdss-dsi-panel-framerate = <0x3c>;
@@ -86,14 +86,14 @@
 		qcom,mdss-dsi-lp11-init;
 		qcom,mdss-dsi-init-delay-us = <0x64>;
 		qcom,mdss-night-brightness = <0x9 0x1b 0x2d 0x3f>;
-		qcom,panel-supply-entries = <0x168>;
+		qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 
 		};
 
 	qcom,mdss_dsi_ili9881c_tianma_720p_video {
 		xiaomi,panel-id = <0x2>;
 		qcom,mdss-dsi-panel-name = "Tianma_ili9881c_720p_video_mode_dsi_panel";
-		qcom,mdss-dsi-panel-controller = <0x169>;
+		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
 		qcom,mdss-dsi-panel-type = "dsi_video_mode";
 		qcom,mdss-dsi-panel-destination = "display_1";
 		qcom,mdss-dsi-panel-framerate = <0x3c>;
@@ -178,13 +178,13 @@
 		qcom,mdss-dsi-lp11-init;
 		qcom,mdss-dsi-init-delay-us = <0x64>;
 		qcom,mdss-night-brightness = <0x9 0x1b 0x2d 0x3f>;
-		qcom,panel-supply-entries = <0x168>;
+		qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 	};
 
 	qcom,mdss_dsi_nt35521s_ctc_720p_video {
 		xiaomi,panel-id = <0x1>;
 		qcom,mdss-dsi-panel-name = "CTC_nt35521s_720p_video_mode_dsi_panel";
-		qcom,mdss-dsi-panel-controller = <0x169>;
+		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
 		qcom,mdss-dsi-panel-type = "dsi_video_mode";
 		qcom,mdss-dsi-panel-destination = "display_1";
 		qcom,mdss-dsi-panel-framerate = <0x3c>;
@@ -264,6 +264,6 @@
 		qcom,mdss-dsi-lp11-init;
 		qcom,mdss-dsi-init-delay-us = <0x64>;
 		qcom,mdss-night-brightness = <0x9 0x1b 0x2d 0x3f>;
-		qcom,panel-supply-entries = <0x168>;
+		qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 	};
 };
