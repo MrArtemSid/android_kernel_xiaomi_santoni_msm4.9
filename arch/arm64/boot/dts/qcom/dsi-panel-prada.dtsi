@@ -1,5 +1,5 @@
 &mdss_mdp {
-	qcom,mdss_dsi_hx8394f_boe_720p_video {
+	dsi_hx8394f_boe_720p_video: qcom,mdss_dsi_hx8394f_boe_720p_video {
 		xiaomi,panel-id = <0x0>;
 		qcom,mdss-dsi-panel-name = "BOE_hx8394F_720p_video_mode_dsi_panel";
 		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
@@ -90,7 +90,7 @@
 
 		};
 
-	qcom,mdss_dsi_ili9881c_tianma_720p_video {
+	dsi_ili9881c_tianma_720p_video: qcom,mdss_dsi_ili9881c_tianma_720p_video {
 		xiaomi,panel-id = <0x2>;
 		qcom,mdss-dsi-panel-name = "Tianma_ili9881c_720p_video_mode_dsi_panel";
 		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
@@ -181,7 +181,7 @@
 		qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 	};
 
-	qcom,mdss_dsi_nt35521s_ctc_720p_video {
+	dsi_nt35521s_ctc_720p_video: qcom,mdss_dsi_nt35521s_ctc_720p_video {
 		xiaomi,panel-id = <0x1>;
 		qcom,mdss-dsi-panel-name = "CTC_nt35521s_720p_video_mode_dsi_panel";
 		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
