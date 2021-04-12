@@ -253,6 +253,7 @@
 };
 
 &i2c_2 {
+	status = "okay";
 	aw2013@45 {
 		compatible = "awinic,aw2013";
 		reg = <0x45>;
