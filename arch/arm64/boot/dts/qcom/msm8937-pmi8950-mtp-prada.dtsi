@@ -404,7 +404,7 @@
 	atmel_mxt_ts@4a {
 		compatible = "atmel,mxt-ts";
 		reg = <0x4a>;
-		interrupt-parent = <0xa7>;
+		interrupt-parent = <&tlmm>;
 		interrupts = <0x41 0x2008>;
 		vddio-supply = <&pm8937_l6>;
 		vdd-supply = <&pm8937_l10>;
