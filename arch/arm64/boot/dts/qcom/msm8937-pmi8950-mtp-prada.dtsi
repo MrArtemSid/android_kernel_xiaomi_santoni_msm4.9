@@ -509,6 +509,12 @@
 	};
 };
 
+&soc {
+	restart@4ab000 {
+		qcom,force-warm-reboot;
+	};
+};
+
 &apps_iommu {
 	qcom,no-aarch64;
 };
