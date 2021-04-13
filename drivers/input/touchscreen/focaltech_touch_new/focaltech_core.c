@@ -3025,7 +3025,11 @@ static int fts_ts_i2c_probe(struct i2c_client *client, const struct i2c_device_i
 	int ret = 0;
 	struct fts_ts_data *ts_data = NULL;
 	struct device_node *dp = client->dev.of_node;
-
+	
+	extern int prada_tpsensor;
+	if (prada_tpsensor != 2)
+		return -ENODEV;
+		
 	FTS_INFO("Touch Screen(I2C BUS) driver prboe...");
 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
 		FTS_ERROR("I2C not supported");
