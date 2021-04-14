@@ -5928,7 +5928,11 @@ static int mxt_probe(struct i2c_client *client,
 	struct mxt_data *data;
 	int error;
 	unsigned char val;
-
+	
+	extern int prada_tpsensor;
+	if (prada_tpsensor != 1)
+		return -ENODEV;
+	
 	CTP_DEBUG("step 1: parse dts. ");
 	if (client->dev.of_node) {
 		pdata = devm_kzalloc(&client->dev,
