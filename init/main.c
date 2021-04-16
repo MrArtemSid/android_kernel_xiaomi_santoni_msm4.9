@@ -478,13 +478,10 @@ static void __init mm_init(void)
 	kaiser_init();
 }
 
-int prada_tpsensor = 2;
 asmlinkage __visible void __init start_kernel(void)
 {
 	char *command_line;
 	char *after_dashes;
-	
-	char *prada_tp = NULL;
 
 	set_task_stack_end_magic(&init_task);
 	smp_setup_processor_id();
@@ -517,11 +514,6 @@ asmlinkage __visible void __init start_kernel(void)
 	build_all_zonelists(NULL, NULL);
 	page_alloc_init();
 
-	prada_tp = strstr(boot_command_line,"mdss_dsi_nt35521s_ctc_720p_video");
-	if (prada_tp) {
-		prada_tpsensor = 1;
-	}
-	
 	pr_notice("Kernel command line: %s\n", boot_command_line);
 	/* parameters may set static keys */
 	jump_label_init();
