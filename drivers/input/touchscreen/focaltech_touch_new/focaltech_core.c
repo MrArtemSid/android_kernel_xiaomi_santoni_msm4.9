@@ -85,7 +85,7 @@
 * Global variable or extern global variabls/functions
 *****************************************************************************/
 struct fts_ts_data *fts_data;
-
+extern bool xiaomi_ts_probed;
 #if defined(CONFIG_DRM)
 static struct drm_panel *active_panel;
 #endif
@@ -2844,7 +2844,7 @@ static int fts_ts_remove_entry(struct fts_ts_data *ts_data)
 
 	kfree_safe(ts_data->pdata);
 	kfree_safe(ts_data);
-
+	xiaomi_ts_probed = false;
 	FTS_FUNC_EXIT();
 
 	return 0;
@@ -3026,6 +3026,9 @@ static int fts_ts_i2c_probe(struct i2c_client *client, const struct i2c_device_i
 	struct fts_ts_data *ts_data = NULL;
 	struct device_node *dp = client->dev.of_node;
 
+	if (xiaomi_ts_probed)
+		return -ENODEV;
+
 	FTS_INFO("Touch Screen(I2C BUS) driver prboe...");
 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
 		FTS_ERROR("I2C not supported");
@@ -3066,7 +3069,7 @@ static int fts_ts_i2c_probe(struct i2c_client *client, const struct i2c_device_i
 		kfree_safe(ts_data);
 		return ret;
 	}
-
+	xiaomi_ts_probed = true;
 	FTS_INFO("Touch Screen(I2C BUS) driver prboe successfully");
 	return 0;
 }
