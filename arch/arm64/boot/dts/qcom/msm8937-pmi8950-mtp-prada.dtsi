@@ -457,6 +457,7 @@
 
 &i2c_3 {
 	status = "ok";
+/*
 	focaltech@38 {
 		compatible = "focaltech,fts";
 		reg = <0x38>;
@@ -492,6 +493,24 @@
 		focaltech,fw-auto-cal;
 		focaltech,psensor-support;
 		focaltech,gesture-support;
+	};
+*/
+	focaltech@38{
+		compatible = "focaltech,fts";
+		reg = <0x38>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <0x41 0x0>;
+		vdd-supply = <&pm8937_l10>;
+		vcc-i2c-supply = <&pm8937_l6>;
+		focaltech,reset-gpio = <&tlmm 0x40 0x0>;
+		focaltech,irq-gpio = <&tlmm 0x41 0x0>;
+		focaltech,display-coords = <0 0 720 1280>;
+		focaltech,max-touch-number = <10>;
+		focaltech,have-key;
+		focaltech,key-number = <3>;
+		focaltech,keys = <139 172 158>;
+		focaltech,key-y-coord = <1350>;
+		focaltech,key-x-coords = <160 360 572>;
 	};
 	
 	atmel_mxt_ts@4a {
