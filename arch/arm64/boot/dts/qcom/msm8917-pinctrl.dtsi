@@ -1371,6 +1371,7 @@
 					pins = "gpio22", "gpio23";
 					drive-strength = <2>;
 					bias-disable;
+					output-high;
 				};
 			};
 

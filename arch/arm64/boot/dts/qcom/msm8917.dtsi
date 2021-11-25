@@ -43,11 +43,13 @@
 		sdhc1 = &sdhc_1; /* SDC1 eMMC slot */
 		sdhc2 = &sdhc_2; /* SDC2 for SD card */
 		spi3 = &spi_3;
-		spi6 = &spi_6;
 		i2c2 = &i2c_2;
 		i2c5 = &i2c_5;
+		i2c6 = &i2c_6;
+		spi7 = &spi_7;
 		i2c3 = &i2c_3;
 		i2c4 = &i2c_4;
+		i2c6 = &i2c_6;
 	};
 
 	firmware: firmware {
@@ -65,7 +67,23 @@
 					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/vendor";
 					type = "ext4";
 					mnt_flags = "ro,barrier=1,discard";
-					fsmgr_flags = "wait,avb";
+					fsmgr_flags = "wait";
+					status = "ok";
+				};
+				system {
+					compatible = "android,system";
+					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/system";
+					type = "ext4";
+					mnt_flags = "ro,barrier=1,discard";
+					fsmgr_flags = "wait";
+					status = "ok";
+				};
+				odm {
+					compatible = "android,odm";
+					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/odm";
+					type = "ext4";
+					mnt_flags = "ro,nosuid,nodev,barrier=1";
+					fsmgr_flags = "wait";
 					status = "ok";
 				};
 			};
@@ -86,7 +104,7 @@
 		modem_mem: modem_region@0 {
 			compatible = "removed-dma-pool";
 			no-map;
-			reg = <0x0 0x86800000 0x0 0x5500000>;
+			reg = <0x0 0x86800000 0x0 0x4D00000>;
 		};
 
 		adsp_fw_mem: adsp_fw_region@0 {
@@ -95,6 +113,12 @@
 			reg = <0x0 0x8bd00000 0x0 0x1100000>;
 		};
 
+		srecorder_mem: srecorder_region@0 {
+			compatible = "removed-dma-pool", "srecorder_mem";
+			no-map;
+			reg = <0x0 0x8f100000 0x0 0x400000>;
+		};
+		
 		wcnss_fw_mem: wcnss_fw_region@0 {
 			compatible = "removed-dma-pool";
 			no-map;
@@ -142,6 +166,50 @@
 		cont_splash_mem: splash_region@83000000 {
 			reg = <0x0 0x90000000 0x0 0x1400000>;
 		};
+		
+		sahara_mem: sahara_region@0x92000000 {
+			compatible = "sahara_mem";
+			no-map;
+			reg = <0x0 0x92000000 0x0 0x0200000>;
+		};
+
+		hwlog_tz_mem: hwlog_tz_region@0 {
+			linux,reserve-contiguous-region;
+			linux,reserve-region;
+			linux,remove-completely;
+			no-map;
+			reg = <0x0 0x92200000 0x0 0x0100000>;
+			label = "hwlog_tz_mem";
+		};
+
+		tzapp_mem: tzapp_region@0 {
+			compatible = "removed-dma-pool";
+			no-map;
+			reg = <0x0 0x92300000 0x0 0x1900000>;
+			label = "tzapp_mem";
+		};
+
+		irqtrace_mem: irqtrace_region@0x93C00000 {
+			compatible = "irqtrace_mem";
+			no-map;
+			reg = <0x0 0x93C00000 0x0 0x0080000>;
+			status = "disabled";
+		};
+
+		tasktrace_mem: tasktrace_region@0x93C80000 {
+			compatible = "tasktrace_mem";
+			no-map;
+			reg = <0x0 0x93C80000 0x0 0x0080000>;
+			status = "disabled";
+		};
+
+		fastbootdump_mem: fastbootdump_region@0x93D00000 {
+			compatible = "fastbootdump_mem";
+			no-map;
+			reg = <0x0 0x93D00000 0x0 0x01400000>;
+			status = "disabled";
+		};
+		/*start<0x95100000> size<0x05000000> used for vfs region*/
 
 		dump_mem: mem_dump_region {
 			compatible = "shared-dma-pool";
@@ -476,7 +544,33 @@
 		dma-names = "tx", "rx";
 		status = "disabled";
 	};
+	
+	i2c_6: i2c@7af6000 { /* BLSP2 QUP2 */
+		compatible = "qcom,i2c-msm-v2";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg-names = "qup_phys_addr";
+		reg = <0x7af6000 0x600>;
+		interrupt-names = "qup_irq";
+		interrupts = <0 300 0>;
+		qcom,clk-freq-out = <400000>;
+		qcom,clk-freq-in  = <19200000>;
+		clock-names = "iface_clk", "core_clk";
+		clocks = <&clock_gcc clk_gcc_blsp2_ahb_clk>,
+			<&clock_gcc clk_gcc_blsp2_qup2_i2c_apps_clk>;
 
+		pinctrl-names = "i2c_active", "i2c_sleep";
+		pinctrl-0 = <&i2c_6_active>;
+		pinctrl-1 = <&i2c_6_sleep>;
+		qcom,noise-rjct-scl = <0>;
+		qcom,noise-rjct-sda = <0>;
+		qcom,master-id = <84>;
+		dmas = <&dma_blsp2 6 64 0x20000020 0x20>,
+			<&dma_blsp2 7 32 0x20000020 0x20>;
+		dma-names = "tx", "rx";
+		status = "ok";
+	};
+	
 	rpm_bus: qcom,rpm-smd {
 		compatible = "qcom,rpm-smd";
 		rpm-channel-name = "rpm_requests";
@@ -762,6 +856,13 @@
 			};
 		};
 	};
+	
+	android_usb: android_usb@86000c8 {
+		compatible = "qcom,android-usb";
+		reg = <0x086000c8 0xc8>;
+		qcom,pm-qos-latency = <13 191 12701>;
+	};
+
 
 	cpubw: qcom,cpubw {
 		compatible = "qcom,devbw";
@@ -918,6 +1019,21 @@
 		pil@94c {
 			compatible = "qcom,msm-imem-pil";
 			reg = <0x94c 200>;
+		};
+		
+		hw_reset_magic_addr@fe4 {
+            compatible = "qcom,msm-imem-reset_magic_addr";
+            reg = <0xfe4 4>;
+        };
+
+        srecorder_header@ae0 {
+            compatible = "qcom,msm-imem-srecorder_header";
+            reg = <0xae0 24>;
+        };
+
+		hw_tz_reset_reason_addr@7a4 {
+			compatible = "qcom,msm-imem-tz-reset-reason-addr";
+			reg = <0x7a4 4>;
 		};
 
 		diag_dload@c8 {
@@ -1322,9 +1438,9 @@
 		status = "disabled";
 	};
 
-	qcom_seecom: qseecom@85b00000 {
+	qcom_seecom: qseecom@92300000 {
 		compatible = "qcom,qseecom";
-		reg = <0x85b00000 0x800000>;
+		reg = <0x92300000 0x1900000>;
 		reg-names = "secapp-region";
 		qcom,hlos-num-ce-hw-instances = <1>;
 		qcom,hlos-ce-hw-instance = <0>;
@@ -1610,30 +1726,25 @@
 		};
 	};
 
-	spi_6: spi@7af6000 { /* BLSP2 QUP2 */
+	spi_7: spi@7AF7000 { /* BLSP2 QUP2 */
 		compatible = "qcom,spi-qup-v2";
 		#address-cells = <1>;
 		#size-cells = <0>;
 		reg-names = "spi_physical", "spi_bam_physical";
-		reg = <0x7af6000 0x600>,
-			<0x7ac4000 0x1d000>;
-		interrupt-names = "spi_irq", "spi_bam_irq";
-		interrupts = <0 300 0>, <0 239 0>;
-		spi-max-frequency = <50000000>;
-		pinctrl-names = "spi_default", "spi_sleep";
-		pinctrl-0 = <&spi6_default &spi6_cs0_active>;
-		pinctrl-1 = <&spi6_sleep &spi6_cs0_sleep>;
+		reg = <0x7AF7000 0x600>,
+			<0x7AC4000 0x1F000>;
+		interrupts = <0 301 0>, <0 239 0>;
+		spi-max-frequency = <19200000>;
 		clocks = <&clock_gcc clk_gcc_blsp2_ahb_clk>,
-			<&clock_gcc clk_gcc_blsp2_qup2_spi_apps_clk>;
+			<&clock_gcc clk_gcc_blsp2_qup3_spi_apps_clk>;
 		clock-names = "iface_clk", "core_clk";
 		qcom,infinite-mode = <0>;
 		qcom,use-bam;
 		qcom,use-pinctrl;
 		qcom,ver-reg-exists;
-		qcom,bam-consumer-pipe-index = <6>;
-		qcom,bam-producer-pipe-index = <7>;
+		qcom,bam-consumer-pipe-index = <8>;
+		qcom,bam-producer-pipe-index = <9>;
 		qcom,master-id = <84>;
-		status = "disabled";
 	};
 
 	qcom,wcnss-wlan@a000000 {
@@ -1790,6 +1901,12 @@
 	qcom,enable-root-clk;
 	qcom,clk-dis-wait-val = <0x5>;
 	status = "okay";
+};
+
+/{
+         huawei_boot_time {
+                 compatible = "huawei,hw_boot_time_info";
+         };
 };
 
 /* GPU overrides */

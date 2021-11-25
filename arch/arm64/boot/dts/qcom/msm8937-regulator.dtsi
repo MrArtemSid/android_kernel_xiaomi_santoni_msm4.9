@@ -169,9 +169,9 @@
 	rpm-regulator-ldoa8 {
 		status = "okay";
 		pm8937_l8: regulator-l8 {
-			regulator-min-microvolt = <2850000>;
-			regulator-max-microvolt = <2900000>;
-			qcom,init-voltage = <2900000>;
+			regulator-min-microvolt = <2700000>;
+			regulator-max-microvolt = <2950000>;
+			qcom,init-voltage = <2950000>;
 			status = "okay";
 		};
 	};
