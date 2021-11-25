@@ -185,16 +185,16 @@
         "AMIC2", "MIC BIAS Internal2",
         "AMIC3", "MIC BIAS External";
 
-    asoc-codec = <&stub_codec>, <&pm8937_cajon_dig>, <&hdmi_dba>;
+    asoc-codec = <&stub_codec>, <&msm_digital_codec>, <&hdmi_dba>;
     asoc-codec-names = "msm-stub-codec.1", "cajon_codec",
                         "msm-hdmi-dba-codec-rx";
 };
 
-&pm8937_cajon_dig {
+&msm_digital_codec {
     status = "okay";
 };
 
-&pm8937_cajon_analog {
+&pmic_analog_codec {
     status = "okay";
 };
 

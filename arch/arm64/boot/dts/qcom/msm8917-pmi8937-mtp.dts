@@ -37,6 +37,6 @@
 	qcom,battery-data = <&mtp_batterydata>;
 };
 
-&qpnp_smbcharger {
+/*&qpnp_smbcharger {
 	qcom,battery-data = <&mtp_batterydata>;
-};
+};*/
