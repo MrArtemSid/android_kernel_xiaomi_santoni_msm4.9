@@ -673,6 +673,8 @@ dtb-$(CONFIG_ARCH_SDM429) += sdm429-mtp.dtb \
 endif
 
 dtb-$(CONFIG_ARCH_SDM845_VM) += sdm845-vm.dtb
+dtb-$(CONFIG_ARCH_MSM8909) := msm8909-1gb-mtp.dtb \
+         msm8909-mtp.dtb
 
 always		:= $(dtb-y)
 subdir-y	:= $(dts-dirs)
